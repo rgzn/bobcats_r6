@@ -53,15 +53,17 @@ study_areas_filtered %>% mapview
   # st_set_crs("EPSG:3857") %>% 
   # st_write("r6_studyareas_nomilitary.geojson", append=FALSE)
 
-
+# Pick Bodie Area
 study_areas[217,] -> bodie
 bodie %>% 
   st_buffer(dist=5000) %>% 
   st_make_grid(cellsize=c(1000,1000)) -> bodie_grid
 
 bodie %>% st_buffer(dist=5000) -> bodie_area
+
 # pick a grid cell size
 ovrGridSize <- 1000
+
 # make grid and number cells
 reqGrid <- st_make_grid(bodie_area, cellsize = ovrGridSize) %>% st_sf %>% 
   dplyr::mutate(id = 1:nrow(.))
